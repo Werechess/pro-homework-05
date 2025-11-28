@@ -1,5 +1,6 @@
 package ru.otus.cryptosample.coins.feature.adapter
 
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -32,5 +33,20 @@ class CoinViewHolder(
 
             fireBadge.isVisible = coin.highlight
         }
+    }
+
+    fun bind(coin: CoinState, payloads: List<Any>) {
+        if (payloads.isNotEmpty()) {
+            val bundle = payloads[0] as Bundle
+            if (bundle.containsKey("highlight")) {
+                updateHighlight(bundle.getBoolean("highlight"))
+            }
+        } else {
+            bind(coin)
+        }
+    }
+
+    private fun updateHighlight(highlight: Boolean) {
+        binding.fireBadge.isVisible = highlight
     }
 }
